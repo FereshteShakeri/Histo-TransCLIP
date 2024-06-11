@@ -281,6 +281,9 @@ def prepare_objects(query_features, query_labels, val_features, val_labels, supp
     clip_logits = 100 * query_features @ clip_prototypes
 
     if verbose:
+        print(query_features.shape)
+        print(query_labels.shape)
+        print(clip_logits.shape)
         acc = cls_acc(clip_logits, query_labels)
         print("\n**** Zero-shot CLIP's test accuracy: {:.2f}. ****\n".format(acc))
 

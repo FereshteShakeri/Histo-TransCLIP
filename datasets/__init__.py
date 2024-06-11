@@ -15,6 +15,8 @@ from .imagenet_a import ImageNetA
 from .imagenet_v2 import ImageNetV2
 from .imagenet_r import ImageNetR
 from .imagenet_sketch import ImageNetSketch
+from .sicapv2 import SicapV2
+from .sicap_mil import SicapMIL
 from .utils import *
 
 dataset_list = {
@@ -34,6 +36,8 @@ dataset_list = {
                 "imagenet_v2": ImageNetV2,
                 "imagenet_r": ImageNetR,
                 "imagenet_sketch": ImageNetSketch,
+                "sicapv2": SicapV2,
+                "sicap_mil": SicapMIL,
                 }
 
 

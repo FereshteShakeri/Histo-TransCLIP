@@ -1,6 +1,7 @@
 import os
 import random
 import argparse
+import open_clip
 import numpy as np
 from datasets import get_all_dataloaders
 from utils import *
@@ -70,20 +71,22 @@ def main():
     print(cfg, "\n")
 
     # CLIP
-    clip_model, preprocess = clip.load(cfg['backbone'])
-    clip_model.eval()
+    # clip_model, preprocess = clip.load(cfg['backbone'])
+    clip_model, preprocess_train, preprocess_val = open_clip.create_model_and_transforms('hf-hub:wisdomik/QuiltNet-B-16')
+    clip_model.cuda().eval()
 
     # Prepare dataset
     set_random_seed(args.seed)
 
     print("Preparing dataset.")
 
-    train_loader, val_loader, test_loader, dataset = get_all_dataloaders(cfg, preprocess)
+    train_loader, val_loader, test_loader, dataset = get_all_dataloaders(cfg, preprocess_val)
 
     print("Loading features.")
 
     shot_features, shot_labels, val_features, val_labels, test_features, test_labels, clip_prototypes = get_all_features(
         cfg, train_loader, val_loader, test_loader, dataset, clip_model)
+
     clip_model = clip_model.to('cpu')  # unload CLIP model from VRAM
 
     if args.method == 'TransCLIP':
