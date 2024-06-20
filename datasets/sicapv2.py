@@ -4,10 +4,31 @@ import pandas as pd
 
 from .utils import Datum, DatasetBase
 
-templates = ["a histopathology slide showing {}",
-            "histopathology image of {}",
-            "pathology tissue showing {}",
-            "presence of {} tissue on image"]
+
+templates = [
+            "{}.",
+            "a photomicrograph showing {}.",
+            "a photomicrograph of {}.",
+            "an image of {}.",
+            "an image showing {}.",
+            "an example of {}.",
+            "{} is shown.",
+            "this is {}.",
+            "there is {}.",
+            "a histopathological image showing {}.",
+            "a histopathological image of {}.",
+            "a histopathological photograph of {}.",
+            "a histopathological photograph showing {}.",
+            "shows {}.",
+            "presence of {}.",
+            "{} is present.",
+            "an H&E stained image of {}.",
+            "an H&E stained image showing {}.",
+            "an H&E image showing {}.",
+            "an H&E image of {}.",
+            "{}, H&E stain.",
+            "{}, H&E."
+]
 
 class SicapV2(DatasetBase):
     
@@ -62,7 +83,6 @@ class SicapV2(DatasetBase):
         
     def split_data(self, data_split, split):
         items = []
-        print(self.data_train)
         for i in range(len(data_split)):
             impath = os.path.join(self.image_dir, 'images', data_split.at[i, "image_name"])
             # print(impath)
@@ -76,40 +96,6 @@ class SicapV2(DatasetBase):
         # print(items)
         if split == "train":
             random.shuffle(items)
-            print(len(items[:int(len(data_split)/2)]))
-            print(len(items[int(len(data_split)/2):]))
             return items[:int(len(data_split)/2)], items[int(len(data_split)/2):]
         elif split == "test":
             return items, items
-
-    """
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, index):
-        image_path = os.path.join(self.image_dir, self.image_paths[index])
-        image = Image.open(image_path).convert('RGB')
-
-        if self.transform:
-            image = self.transform(image)
-
-        label = self.labels[index]
-
-        return image, label
-    
-    def read_data(self, classnames, labels):
-        for i in range(len(classnames)):
-            item = Datum(impath=impath, label=labels[folder], classname=classname)
-            items.append(item)
-            
-        return items
-    """
-    def generate_fewshot_dataset_(self,num_shots, split):
-
-        print('num_shots is ',num_shots)
-        if split == "train":
-            few_shot_data = self.generate_fewshot_dataset(self.train_x, num_shots=num_shots)
-        elif split == "val":
-            few_shot_data = self.generate_fewshot_dataset(self.val, num_shots=num_shots)
-
-        return few_shot_data

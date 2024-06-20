@@ -50,7 +50,7 @@ def main():
     cache_dir = os.path.join('./caches', cfg['dataset'])
     os.makedirs(cache_dir, exist_ok=True)
     cfg['cache_dir'] = cache_dir
-    cfg['load_cache'] = False
+    cfg['load_cache'] = True
     cfg['load_pre_feat'] = False
 
     print("\nRunning configs.")
@@ -72,7 +72,7 @@ def main():
 
     # CLIP
     # clip_model, preprocess = clip.load(cfg['backbone'])
-    clip_model, preprocess_train, preprocess_val = open_clip.create_model_and_transforms('hf-hub:wisdomik/QuiltNet-B-16')
+    clip_model, preprocess_train, preprocess_val = open_clip.create_model_and_transforms('hf-hub:wisdomik/QuiltNet-B-32')
     clip_model.cuda().eval()
 
     # Prepare dataset

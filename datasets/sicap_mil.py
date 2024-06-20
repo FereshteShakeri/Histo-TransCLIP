@@ -4,10 +4,32 @@ import pandas as pd
 
 from .utils import Datum, DatasetBase
 
-templates = ["a histopathology slide showing {}",
-            "histopathology image of {}",
-            "pathology tissue showing {}",
-            "presence of {} tissue on image"]
+templates = [
+            "{}.",
+            "a photomicrograph showing {}.",
+            "a photomicrograph of {}.",
+            "an image of {}.",
+            "an image showing {}.",
+            "an example of {}.",
+            "{} is shown.",
+            "this is {}.",
+            "there is {}.",
+            "a histopathological image showing {}.",
+            "a histopathological image of {}.",
+            "a histopathological photograph of {}.",
+            "a histopathological photograph showing {}.",
+            "shows {}.",
+            "presence of {}.",
+            "{} is present.",
+            "an H&E stained image of {}.",
+            "an H&E stained image showing {}.",
+            "an H&E image showing {}.",
+            "an H&E image of {}.",
+            "{}, H&E stain.",
+            "{}, H&E."
+]
+
+
 
 class SicapMIL(DatasetBase):
     
