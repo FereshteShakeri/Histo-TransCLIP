@@ -6,12 +6,15 @@ import numpy as np
 from datasets import get_all_dataloaders
 from utils import *
 
+from conch.open_clip_custom import create_model_from_pretrained
 
 def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', default='dtd', help='dataset name', type=str)
     parser.add_argument('--root_path', default='./datasets', type=str)
     parser.add_argument('--method', default='TransCLIP', type=str,
+                        help='')
+    parser.add_argument('--model', default='Quilt', type=str,
                         help='')
     parser.add_argument('--shots', default=0, type=int)
     parser.add_argument('--seed', default=1, type=int)
@@ -60,6 +63,7 @@ def main():
     cfg['seed'] = args.seed
     cfg['root_path'] = args.root_path
     cfg['method'] = args.method
+    cfg['model'] = args.model
     cfg['shots'] = args.shots
 
     cfg['prototypes_path'] = args.prototypes_path
@@ -72,7 +76,10 @@ def main():
 
     # CLIP
     # clip_model, preprocess = clip.load(cfg['backbone'])
-    clip_model, preprocess_train, preprocess_val = open_clip.create_model_and_transforms('hf-hub:wisdomik/QuiltNet-B-32')
+    if args.model == 'Quilt':
+        clip_model, preprocess_train, preprocess_val = open_clip.create_model_and_transforms('hf-hub:wisdomik/QuiltNet-B-32')
+    elif args.model == 'CONCH':
+        clip_model, preprocess_val = create_model_from_pretrained("conch_ViT-B-16", checkpoint_path="checkpoints/conch/pytorch_model.bin")
     clip_model.cuda().eval()
 
     # Prepare dataset

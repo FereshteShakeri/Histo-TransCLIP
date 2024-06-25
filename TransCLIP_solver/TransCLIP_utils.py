@@ -269,7 +269,7 @@ def prepare_objects(query_features, query_labels, val_features, val_labels, supp
         initial_predictions = initial_predictions.cuda().float()
 
     if len(clip_prototypes.shape) == 3:  # use more than 1 template
-        clip_prototypes = clip_prototypes[0] # clip_prototypes[0] use only the first one clip_prototypes.mean(dim=0)
+        clip_prototypes = clip_prototypes.mean(dim=0) # clip_prototypes[0] use only the first one clip_prototypes.mean(dim=0)
 
     if few_shot:
         support_features = support_features.squeeze().float()

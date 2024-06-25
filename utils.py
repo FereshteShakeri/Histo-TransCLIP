@@ -1,4 +1,5 @@
 from tqdm import tqdm
+from conch.open_clip_custom import tokenize, get_tokenizer
 
 import torch
 import torch.nn.functional as F
@@ -14,7 +15,7 @@ def cls_acc(output, target, topk=1):
     return acc
 
 
-def clip_classifier(classnames, template, clip_model, reduce='mean', gpt=False, wordnet_dict=None):
+def clip_classifier(classnames, template, clip_model, model_name, reduce='mean', gpt=False, wordnet_dict=None):
     with torch.no_grad():
         clip_weights = []
         if wordnet_dict is not None:
@@ -54,9 +55,16 @@ def clip_classifier(classnames, template, clip_model, reduce='mean', gpt=False, 
                     texts = template[classname]
                 else:
                     texts = [t.format(classname)  for t in template]
-                texts = clip.tokenize(texts).cuda()
-    
-                class_embeddings = clip_model.encode_text(texts)
+                if model_name == 'Quilt':
+                    texts = clip.tokenize(texts).cuda()
+                    class_embeddings = clip_model.encode_text(texts)
+                
+                # CONCH
+                if model_name == 'CONCH':
+                    tokenizer = get_tokenizer()
+                    text_tokens = tokenize(texts=texts, tokenizer=tokenizer)
+                    class_embeddings = clip_model.encode_text(text_tokens.cuda())
+                
                 class_embeddings /= class_embeddings.norm(dim=-1, keepdim=True)
                 if reduce=='mean':
                     class_embedding = class_embeddings.mean(dim=0)
@@ -71,7 +79,7 @@ def clip_classifier(classnames, template, clip_model, reduce='mean', gpt=False, 
 
 
 def get_all_features(cfg, train_loader, val_loader, test_loader, dataset, clip_model):
-    clip_prototypes = clip_classifier(dataset.classnames, dataset.template, clip_model, reduce=None)
+    clip_prototypes = clip_classifier(dataset.classnames, dataset.template, clip_model, cfg['model'], reduce=None)
     test_features, test_labels = pre_load_features(cfg, "test", clip_model, test_loader)
     shot_features = None
     shot_labels = None
