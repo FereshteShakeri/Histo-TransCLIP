@@ -1,6 +1,7 @@
 from tqdm import tqdm
 from conch.open_clip_custom import tokenize, get_tokenizer
 
+import time
 import torch
 import torch.nn.functional as F
 
@@ -55,15 +56,19 @@ def clip_classifier(classnames, template, clip_model, model_name, reduce='mean',
                     texts = template[classname]
                 else:
                     texts = [t.format(classname)  for t in template]
-                if model_name == 'Quilt':
+                if model_name == 'Quilt' or model_name == 'CLIP':
                     texts = clip.tokenize(texts).cuda()
                     class_embeddings = clip_model.encode_text(texts)
                 
                 # CONCH
-                if model_name == 'CONCH':
+                elif model_name == 'CONCH':
                     tokenizer = get_tokenizer()
                     text_tokens = tokenize(texts=texts, tokenizer=tokenizer)
                     class_embeddings = clip_model.encode_text(text_tokens.cuda())
+                    
+                elif model_name == 'PLIP':
+                    texts = clip.tokenize(texts).cuda()
+                    class_embeddings = clip_model.get_text_features(texts)
                 
                 class_embeddings /= class_embeddings.norm(dim=-1, keepdim=True)
                 if reduce=='mean':
@@ -80,7 +85,7 @@ def clip_classifier(classnames, template, clip_model, model_name, reduce='mean',
 
 def get_all_features(cfg, train_loader, val_loader, test_loader, dataset, clip_model):
     clip_prototypes = clip_classifier(dataset.classnames, dataset.template, clip_model, cfg['model'], reduce=None)
-    test_features, test_labels = pre_load_features(cfg, "test", clip_model, test_loader)
+    test_features, test_labels = pre_load_features(cfg, "test", clip_model, cfg['model'], test_loader)
     shot_features = None
     shot_labels = None
     val_features = None
@@ -149,13 +154,13 @@ def build_cache_model(cfg, clip_model, train_loader_cache, n_views=0, reduce=Non
 
 
 
-def pre_load_features(cfg, split, clip_model, loader, n_views=1):
+def pre_load_features(cfg, split, clip_model, model_name, loader, n_views=1):
 
     print('... from {} split:'.format(split))
 
     if cfg['load_pre_feat'] == False:
         features, labels = [], []
-        
+        feature_time = time.time()
         with torch.no_grad():
           
             for view in range(n_views):
@@ -165,8 +170,10 @@ def pre_load_features(cfg, split, clip_model, loader, n_views=1):
                         
                         images, target = images.cuda(), target.cuda()
                         
-                        
-                        image_features = clip_model.encode_image(images)
+                        if model_name == "PLIP":
+                            image_features = clip_model.get_image_features(images)
+                        else:
+                            image_features = clip_model.encode_image(images)
                         
                         image_features /= image_features.norm(dim=-1, keepdim=True)
                         
@@ -194,7 +201,7 @@ def pre_load_features(cfg, split, clip_model, loader, n_views=1):
         
         elif n_views==1:
             features, labels = torch.cat(features), torch.cat(labels)
-        
+        print("real feature extraction time {}".format(str(time.time() - feature_time)))
         torch.save(features, cfg['cache_dir'] + "/" + split + "_f.pt")
         torch.save(labels, cfg['cache_dir'] + "/" + split + "_l.pt")
    

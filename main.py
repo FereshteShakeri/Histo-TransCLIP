@@ -1,4 +1,5 @@
 import os
+import time
 import random
 import argparse
 import open_clip
@@ -6,7 +7,10 @@ import numpy as np
 from datasets import get_all_dataloaders
 from utils import *
 
+# from plip.plip import PLIP
 from conch.open_clip_custom import create_model_from_pretrained
+from transformers import AutoProcessor, AutoModelForZeroShotImageClassification
+
 
 def get_arguments():
     parser = argparse.ArgumentParser()
@@ -75,11 +79,17 @@ def main():
     print(cfg, "\n")
 
     # CLIP
-    # clip_model, preprocess = clip.load(cfg['backbone'])
+    _, preprocess_val = clip.load(cfg['backbone'])
+    if args.model == 'CLIP':
+        clip_model, preprocess_val = clip.load(cfg['backbone'])
     if args.model == 'Quilt':
-        clip_model, preprocess_train, preprocess_val = open_clip.create_model_and_transforms('hf-hub:wisdomik/QuiltNet-B-32')
+        clip_model, preprocess_train, preprocess_val = open_clip.create_model_and_transforms('hf-hub:wisdomik/QuiltNet-B-16')
     elif args.model == 'CONCH':
         clip_model, preprocess_val = create_model_from_pretrained("conch_ViT-B-16", checkpoint_path="checkpoints/conch/pytorch_model.bin")
+    elif args.model == "PLIP":
+        # clip_model, preprocess  = PLIP('vinid/plip')
+        processor = AutoProcessor.from_pretrained("vinid/plip")
+        clip_model = AutoModelForZeroShotImageClassification.from_pretrained("vinid/plip")
     clip_model.cuda().eval()
 
     # Prepare dataset
@@ -90,13 +100,15 @@ def main():
     train_loader, val_loader, test_loader, dataset = get_all_dataloaders(cfg, preprocess_val)
 
     print("Loading features.")
-
+    print(clip_model)
+    feature_time = time.time()
     shot_features, shot_labels, val_features, val_labels, test_features, test_labels, clip_prototypes = get_all_features(
         cfg, train_loader, val_loader, test_loader, dataset, clip_model)
-
+    print("feature time {}".format(str(time.time()-feature_time)))
     clip_model = clip_model.to('cpu')  # unload CLIP model from VRAM
 
     if args.method == 'TransCLIP':
+        transclip_time = time.time()
         from TransCLIP_solver.TransCLIP import TransCLIP_solver
         if cfg['shots'] == 0:
             TransCLIP_solver(shot_features, shot_labels, val_features, val_labels, test_features, test_labels,
@@ -105,6 +117,7 @@ def main():
             shot_features = shot_features.unsqueeze(0)
             TransCLIP_solver(shot_features, shot_labels, val_features, val_labels, test_features, test_labels,
                              clip_prototypes)
+        print("feature time {}".format(str(time.time()-transclip_time)))
 
     elif args.method == 'On-top':
 
