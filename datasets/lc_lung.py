@@ -44,7 +44,6 @@ templates = [
 ]
 
 
-
 class LCLUNG(DatasetBase):
 
     dataset_dir = "LC25000"

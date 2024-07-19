@@ -30,6 +30,7 @@ templates = [
             "{}, H&E."
 ]
 
+
 class SicapV2(DatasetBase):
     
     image_dir = "SICAPv2"
@@ -79,7 +80,7 @@ class SicapV2(DatasetBase):
         test,_ = self.split_data(self.data_test, "test")
 
         
-        super().__init__(train_x=train, val=val, test=test)
+        super().__init__(train_x=train, val=val, test=train)
         
     def split_data(self, data_split, split):
         items = []
@@ -95,7 +96,8 @@ class SicapV2(DatasetBase):
         
         # print(items)
         if split == "train":
-            random.shuffle(items)
-            return items[:int(len(data_split)/2)], items[int(len(data_split)/2):]
+            # random.shuffle(items)
+            return items, items
+            # return items[:int(len(data_split)/2)], items[int(len(data_split)/2):]
         elif split == "test":
             return items, items

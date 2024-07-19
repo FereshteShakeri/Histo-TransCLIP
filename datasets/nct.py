@@ -49,7 +49,6 @@ templates = [
 ]
 
 
-
 class NCT(DatasetBase):
 
     dataset_dir = "NCT-CRC-HE-100K"
@@ -58,6 +57,7 @@ class NCT(DatasetBase):
         
         self.dataset_dir = os.path.join(root, self.dataset_dir)
         self.image_dir = os.path.join(self.dataset_dir, "NCT-CRC-HE-100K")
+        self.image_dir_test = os.path.join(self.dataset_dir, "CRC-VAL-HE-7K")
 
         text_file = os.path.join(self.dataset_dir, "classnames.txt")
         # classnames, labels = self.read_classnames(text_file)
@@ -71,7 +71,11 @@ class NCT(DatasetBase):
         super().__init__(train_x=train, val=val, test=test)
 
     def read_data(self, data_path, split):
-        image_dir = self.image_dir
+        
+        if split == "test":
+            image_dir = self.image_dir
+        else:
+            image_dir = self.image_dir
         folders = listdir_nohidden(image_dir, sort=True)
         folders = [f for f in folders if f not in TO_BE_IGNORED]
         items = []
@@ -91,4 +95,5 @@ class NCT(DatasetBase):
             random.shuffle(items)
             return items[:int(data_count/2)], items[int(data_count/2):]
         elif split == "test":
-            return items, items
+            random.shuffle(items)
+            return items[:40000], items[40000:]

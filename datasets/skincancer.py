@@ -56,6 +56,7 @@ templates = [
             "{}, H&E."
 ]
 
+
 class SKIN(DatasetBase):
 
     dataset_dir = "skincancer/data"
