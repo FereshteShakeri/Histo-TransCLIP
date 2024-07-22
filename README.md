@@ -7,13 +7,21 @@ This repo is built on top of [TransCLIP](https://github.com/MaxZanella/transduct
 
 ## Table of Contents
 
-1. [Installation](#installation) 
-2. [Usage](#usage)
-3. [Citation](#citation)
-4. [Contact](#contact) 
+1. [Introduction](#introduction) 
+2. [Installation](#installation) 
+3. [Usage](#usage)
+4. [Citation](#citation)
+5. [Contact](#contact) 
 
 
 ---
+
+## Introduction
+
+We enhance vision-language models (VLMs) for histopathology by introducing a transductive approach that leverages text-based predictions and patch affinity. This method improves zero-shot classification accuracy without additional labels, processing 100,000 patches in seconds. Our experiments span four datasets and five VLMs, demonstrating significant accuracy gains over traditional inductive methods.
+
+
+
 
 ## Installation
 
