@@ -18,21 +18,24 @@ This repo is built on top of [TransCLIP](https://github.com/MaxZanella/transduct
 
 ## Introduction
 
+### Short abstract
 We enhance vision-language models (VLMs) for histopathology by introducing a transductive approach that leverages text-based predictions and patch affinity. Histo-TransCLIP improves zero-shot classification accuracy without additional labels, processing 100,000 patches in seconds.
 
+### Visual explanation
 <p align="center">
   <img src="drawing.png" alt="Histo-TransCLIP in action" width="700" height="315">
   <br>
   <em>Figure 1: VLMs leverage textual descriptions of each class to generate pseudo-labels without any manual annotation. These initial predictions are then refined by leveraging the data structure thanks to the Laplacian term.</em>
 </p>
 
-CLIP & Quilt-B16 & Quilt-B32 & PLIP & CONCH
+### Results
+
 |Dataset | CLIP | Quilt-B16 | Quilt-B32 |  PLIP | CONCH |
 |----------|----------|----------|----------|----------|----------|
-| SICAP-MIL   | Data 2   | Data 3   |  Data 3  |
-| LC(Lung)   | Data 5   | Data 6   |
-| SKINCANCER   | Data 8   | Data 9   |
-| NCT-CRC   | Data 8   | Data 9   |
+| SICAP-MIL   | Data 2   | Data 3   |  Data 3  | Data 3   |  Data 3  |
+| LC(Lung)   | Data 2   | Data 3   |  Data 3  | Data 3   |  Data 3  |
+| SKINCANCER   | Data 2   | Data 3   |  Data 3  | Data 3   |  Data 3  |
+| NCT-CRC   | 25.39 | 29.61 |  53.73 | 63.17 | 66.27 |
 
 
 ## Installation
