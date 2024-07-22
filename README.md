@@ -30,12 +30,21 @@ We enhance vision-language models (VLMs) for histopathology by introducing a tra
 
 ### Results
 
+Results in zero-shot:
 |Dataset | CLIP | Quilt-B16 | Quilt-B32 |  PLIP | CONCH |
 |----------|----------|----------|----------|----------|----------|
 | SICAP-MIL   | 29.85 | 40.44 | 35.04 | 46.84 | 27.71 |
 | LC(Lung)   | 31.46 | 43.00 | 76.24 |  84.96 | 84.81 |
 | SKINCANCER   | 4.20 | 15.38 | 39.71 | 22.90 | 58.53 |
 | NCT-CRC   | 25.39 | 29.61 |  53.73 | 63.17 | 66.27 |
+
+Results with Histo-TransCLIP:
+|Dataset | CLIP | Quilt-B16 | Quilt-B32 |  PLIP | CONCH |
+|----------|----------|----------|----------|----------|----------|
+| SICAP-MIL   |  24.72 | 58.49 | 28.18 | 53.23 | 32.58 |
+| LC(Lung)   |  25.62 | 50.53 | 93.93 | 93.80 | 96.29 | 
+| SKINCANCER   | 11.46 | 33.33 | 48.80 | 36.72 | 66.22 |
+| NCT-CRC   | 39.61 | 48.40 | 58.13 | 77.53 | 70.36 |
 
 
 ## Installation
