@@ -23,7 +23,7 @@ We enhance vision-language models (VLMs) for histopathology by introducing a tra
 <p align="center">
   <img src="drawing.png" alt="Histo-TransCLIP in action" width="700" height="315">
   <br>
-  <em>Figure 1: VLMs leverage textual descriptions of each class to generate pseudo-labels without any manual annotation. These initial predictions can then be refined, for example, by leveraging the data structure.</em>
+  <em>Figure 1: VLMs leverage textual descriptions of each class to generate pseudo-labels without any manual annotation. These initial predictions are then refined by leveraging the data structure thanks to the Laplacian term.</em>
 </p>
 
 
