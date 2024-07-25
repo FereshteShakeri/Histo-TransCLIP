@@ -19,7 +19,7 @@ This repo is built on top of [TransCLIP](https://github.com/MaxZanella/transduct
 ## Introduction
 
 ### Short abstract
-We enhance vision-language models (VLMs) for histopathology by introducing a transductive approach that leverages text-based predictions and patch affinity. Histo-TransCLIP improves zero-shot classification accuracy without additional labels, processing 100,000 patches in seconds.
+We enhance vision-language models (VLMs) for histopathology by introducing a transductive approach that leverages text-based predictions and patch affinity in its objective funtion. Histo-TransCLIP improves zero-shot classification accuracy without additional labels and is able to manage more than 100,000 patches in seconds.
 
 ### Visual explanation
 <p align="center">
