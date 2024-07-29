@@ -58,11 +58,7 @@ pip3 install torch==2.0.1 torchaudio==2.0.2 torchvision==0.15.2
 ```
 ## Datasets
 
-Install each dataset from the following links:
-1. [NCT](https://paperswithcode.com/dataset/nct-crc-he-100k)
-2. [Sicap_MIL](https://github.com/jusiro/mil_histology)
-3. [LC25000](https://github.com/tampapath/lung_colon_image_set)
-4. [SkinCancer]()
+Install each dataset follow the instructions in [DATASETS.md](https://github.com/FereshteShakeri/Histo-TransCLIP/blob/main/DATASETS.md).
 
 
 ## Usage
