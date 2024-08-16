@@ -79,6 +79,22 @@ To run the whole experiment, use the following command:
 bash ./scripts/transclip_zs.sh /path/to/datasets/folder Quilt
 ```
 
+## Citations
+
+If you find this repository useful, please consider citing our paper:
+```
+
+```
+Please also consider citing the original TransCLIP paper:
+```
+@article{zanella2024boosting,
+  title={Boosting Vision-Language Models with Transduction},
+  author={Zanella, Maxime and G{\'e}rin, Beno{\^\i}t and Ayed, Ismail Ben},
+  journal={arXiv preprint arXiv:2406.01837},
+  year={2024}
+}
+```
+
 ## Contact
 
 For any inquiries, feel free to [create an issue](https://github.com/FereshteShakeri/Histo-TransCLIP/issues) or contact us at [maxime.zanella@uclouvain.be](mailto:maxime.zanella@uclouvain.be) and [fereshteh.shakeri.1@etsmtl.net](mailto:fereshteh.shakeri.1@etsmtl.net)
