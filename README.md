@@ -60,6 +60,19 @@ pip3 install torch==2.0.1 torchaudio==2.0.2 torchvision==0.15.2
 
 Install each dataset follow the instructions in [DATASETS.md](https://github.com/FereshteShakeri/Histo-TransCLIP/blob/main/DATASETS.md).
 
+## Models
+
+Clone repository of each Medical VLM inside Histo-TransCLIP directory:
+
+```bash
+cd Histo-TransCLIP
+git clone https://github.com/mahmoodlab/CONCH.git
+git clone https://github.com/PathologyFoundation/plip.git
+git clone https://github.com/mlfoundations/open_clip.git
+```
+
+Download Quilt-1m models from [hugginface](https://huggingface.co/wisdomik/QuiltNet-B-32).  
+
 
 ## Usage
 We present the basic usage to get started with our method. You have to pass the datasets folder path and the pre-computed prototypes folder path. Every script has pre-set parameters but you can change them manually.
