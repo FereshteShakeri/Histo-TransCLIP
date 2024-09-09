@@ -1,5 +1,5 @@
 # Boosting VLMs for Histopathology Classification
-The official implementation of [*Boosting Vision-Language Models for Histopathology Classification: Predict all at once*]().
+The official implementation of [*Boosting Vision-Language Models for Histopathology Classification: Predict all at once*](https://arxiv.org/abs/2409.01883).
 
 
 This repo is built on top of [TransCLIP](https://github.com/MaxZanella/transduction-for-vlms).
@@ -96,7 +96,12 @@ bash ./scripts/transclip_zs.sh /path/to/datasets/folder Quilt
 
 If you find this repository useful, please consider citing our paper:
 ```
-
+@article{zanella2024histo,
+  title={Boosting Vision-Language Models for Histopathology Classification: Predict all at once},
+  author={Zanella, Maxime and Shakeri, Fereshteh and Huang, Yunshi and Bahig, Houda and Ayed, Ismail Ben},
+  journal={arXiv preprint arXiv:2409.01883},
+  year={2024}
+}
 ```
 Please also consider citing the original TransCLIP paper:
 ```
