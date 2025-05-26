@@ -19,7 +19,8 @@ def update_z(gmm_likelihood, y_hat, z, W, lambda_value, n_neighbors, labels=None
 
         # For numerical stability
         intermediate -= torch.max(intermediate, dim=1, keepdim=True)[0]
-        intermediate = (y_hat ** lambda_value) * torch.exp(1 / 50 * intermediate)
+        # intermediate = (y_hat ** lambda_value) * torch.exp(1 / 50 * intermediate)
+        intermediate = torch.exp(1 / 50 * intermediate)
         z[0:num_samples] = intermediate / torch.sum(intermediate, dim=1, keepdim=True)
 
     return z
