@@ -73,7 +73,7 @@ class NCT(DatasetBase):
     def read_data(self, data_path, split):
         
         if split == "test":
-            image_dir = self.image_dir
+            image_dir = self.image_dir_test
         else:
             image_dir = self.image_dir
         folders = listdir_nohidden(image_dir, sort=True)
@@ -95,5 +95,5 @@ class NCT(DatasetBase):
             random.shuffle(items)
             return items[:int(data_count/2)], items[int(data_count/2):]
         elif split == "test":
-            random.shuffle(items)
-            return items[:40000], items[40000:]
+            # random.shuffle(items)
+            return items, items
